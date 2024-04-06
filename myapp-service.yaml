@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+   name: myapp-entrypoint
+   namespace: default
+spec:
+  #type: ClusterIP
+   selector:
+      app: myapp
+   ports:
+      - port: 8321
+        targetPort: 8321
