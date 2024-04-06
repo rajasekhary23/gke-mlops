@@ -2,35 +2,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-list
+  name: medical-insurance
   labels:
-    app: todo-list
+    app: medical-insurance
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: todo-list
+      app: medical-insurance
   template:
     metadata:
       labels:
-        app: todo-list
+        app: medical-insurance
     spec:
       containers:
-      - name: todo-list
-        image: rajasekhar23/todo-list-app:latest
+      - name: medical-insurance
+        image: rajasekhar23/mlops-medical-insurance:3.11.9-slim-bookworm
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 3000
+        - containerPort: 8321
 ---
 apiVersion: v1
 kind: Service
 metadata:
-   name: todo-list
+   name: medical-insurance
    namespace: default
 spec:
    type: ClusterIP
    selector:
-      app: todo-list
+      app: medical-insurance
    ports:
-      - port: 3000
-        targetPort: 3000
+      - port: 8321
+        targetPort: 8321
