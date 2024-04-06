@@ -1,0 +1,8 @@
+alias dk='docker'
+alias dp='docker ps'
+alias dpa='docker ps -a'
+alias kc='kubectl'
+alias kg='kubectl get'
+alias kdc='kubectl describe'
+alias ka='kubectl apply -f'
+alias kd='kubectl delete'

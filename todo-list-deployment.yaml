@@ -1,0 +1,36 @@
+#use docker login cmd and provide user and pass to get the docker hub access to the bastionhost server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-list
+  labels:
+    app: todo-list
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo-list
+  template:
+    metadata:
+      labels:
+        app: todo-list
+    spec:
+      containers:
+      - name: todo-list
+        image: rajasekhar23/todo-list-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: todo-list
+   namespace: default
+spec:
+  #type: ClusterIP
+   selector:
+      app: todo-list
+   ports:
+      - port: 3000
+        targetPort: 3000
