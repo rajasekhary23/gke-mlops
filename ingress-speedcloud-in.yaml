@@ -1,5 +1,9 @@
-#helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-#helm install my-ingress-controller ingress-nginx/ingress-nginx
+#Documentation url
+#https://kubernetes.github.io/ingress-nginx/deploy/
+#If you have Helm, you can deploy the ingress controller with the following command:
+# helm upgrade --install ingress-nginx ingress-nginx \
+#  --repo https://kubernetes.github.io/ingress-nginx \
+#  --namespace ingress-nginx --create-namespace
 #This is Ingress-nginx resource Manifest
 apiVersion: networking.k8s.io/v1
 kind: Ingress
