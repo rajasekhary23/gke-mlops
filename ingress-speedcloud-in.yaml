@@ -11,6 +11,10 @@ metadata:
   name: my-ingress
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - speedcloud.in
+    secretName: medical-secret
   rules:
   - host: speedcloud.in
     http:
