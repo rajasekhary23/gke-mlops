@@ -57,3 +57,16 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
+      
+      - name: Scan Image
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: ${{ steps.meta.outputs.tags }}
+          fail-build: true
+          output-format: sarif
+  
+      - name: Upload Anchore Scan SARIF Report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
