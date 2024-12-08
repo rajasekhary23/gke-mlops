@@ -58,15 +58,30 @@ jobs:
           provenance: true
           sbom: true
       
-      - name: Scan Image
-        uses: anchore/scan-action@v3
-        id: scan
-        with:
-          image: ${{ steps.meta.outputs.tags }}
-          fail-build: true
-          output-format: sarif
+      # - name: Scan Image
+      #   uses: anchore/scan-action@v3
+      #   id: scan
+      #   with:
+      #     image: ${{ steps.meta.outputs.tags }}
+      #     fail-build: true
+      #     output-format: sarif
   
-      - name: Upload Anchore Scan SARIF Report
-        uses: github/codeql-action/upload-sarif@v2
+      # - name: Upload Anchore Scan SARIF Report
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: ${{ steps.scan.outputs.sarif }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          sarif_file: ${{ steps.scan.outputs.sarif }}
+          image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}:${{ github.sha }}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        env:
+          TRIVY_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          TRIVY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
