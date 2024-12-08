@@ -15,7 +15,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/mlops-medical-insurance
+          images: ${{ secrets.DOCKER_USERNAME }}/${{ vars.mlops-medical-insurance }}
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
