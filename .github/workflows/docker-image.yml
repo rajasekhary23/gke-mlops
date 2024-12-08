@@ -8,7 +8,26 @@ on:
       - 'main'
   workflow_dispatch:
 jobs:
-  build:
+  secret_scanning:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Secret Scanning
+      uses: trufflesecurity/trufflehog@main
+      with:
+        extra_args: --results=verified,unknown
+  
+  parellel_job_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: echo "Testing parellel job with one step in it."
+  
+  build_push_docker:
+    needs: secret_scanning
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
