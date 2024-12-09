@@ -75,7 +75,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           # ${{ fromJSON(vars.TEST_OS_VERSIONS) }}
-          image-ref: 'docker.io/${{ fromJSON(steps.meta.outputs.tags) }}'
+          image-ref: "docker.io/${{ fromJSON(steps.meta.outputs.tags) }}"
           format: 'sarif'
           output: 'trivy-results.sarif'
         env:
