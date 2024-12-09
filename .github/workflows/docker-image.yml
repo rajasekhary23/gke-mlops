@@ -73,9 +73,9 @@ jobs:
 
       - name: Prepare Trivy Image Reference
         run: |
-          echo "TRIVY_IMAGE_REF=docker.io/${{ fromJSON(steps.meta.outputs.tags) }}" >> $GITHUB_ENV
+          echo "TRIVY_IMAGE_REF=docker.io/${{ fromJson(steps.meta.outputs.tags) }}" >> $GITHUB_ENV
           echo "---"
-          echo "docker.io/${{ fromJSON(steps.meta.outputs.tags) }}"
+          echo "docker.io/${{ fromJson(steps.meta.outputs.tags) }}"
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
