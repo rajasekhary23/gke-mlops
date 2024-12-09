@@ -71,11 +71,16 @@ jobs:
       #   with:
       #     sarif_file: ${{ steps.scan.outputs.sarif }}
 
+      - name: Prepare Trivy Image Reference
+        run: |
+          echo "TRIVY_IMAGE_REF=docker.io/${{ fromJSON(steps.meta.outputs.tags) }}" >> $GITHUB_ENV
+          echo "---"
+          echo "docker.io/${{ fromJSON(steps.meta.outputs.tags) }}"
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          # ${{ fromJSON(vars.TEST_OS_VERSIONS) }}
-          image-ref: "docker.io/${{ fromJSON(steps.meta.outputs.tags) }}"
+          image-ref: "${{ env.TRIVY_IMAGE_REF }}"
           format: 'sarif'
           output: 'trivy-results.sarif'
         env:
